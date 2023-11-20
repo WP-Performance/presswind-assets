@@ -33,6 +33,11 @@ PWVite::init( port: 7777, path: 'test-plugin/', is_plugin: true, slug:
 
 ```
 
+## Preload fonts
+
+```php
+PWVite::init()->setPreloadFont();
+```
 
 ## PWAssets
 
