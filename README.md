@@ -1,6 +1,6 @@
-## Plugin Presswind
+## Presswind Assets helpers for WordPress
 
-This plugin give you the ability to use methods of the Presswind directly in
+This code give you the ability to use methods of the Presswind directly in
 your theme.
 
 ## PWVite
