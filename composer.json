@@ -11,6 +11,7 @@
             "email": "infos@goodmotion.fr"
         }
     ],
+    "license": "MIT",
     "require-dev": {
         "pestphp/pest": "^2.24"
     },
