@@ -105,10 +105,11 @@ class PWVite
         $ordered = PWManifest::getOrdered($this->path, $this->is_plugin);
         foreach ($ordered as $key => $value) {
             // if is css
-            if (property_exists($value, 'css') === true || strpos($value->src, '.css') !== false) {
+            // disable this condition: property_exists($value, 'css') === true ||
+            if (str_contains($value->src, '.css') !== false) {
                 $asset = PWAsset::add($this->slug . '-' . $key, $this->getPath() . $value->file)
-                    ->version($key)
-                    ->setOnLoad();
+                    ->version($key);
+                // ->setOnLoad();
                 $this->setPosition($asset);
 
                 // if is js
