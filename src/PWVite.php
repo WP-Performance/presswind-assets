@@ -71,7 +71,7 @@ class PWVite
 
     private function set_script_dev(): void
     {
-        $asset = PWAsset::add($this->slug, 'https://localhost:' . $this->port . '/' . $this->get_relative_path_from() . '/main' . ($this->is_ts ? '.ts' : '.js'))
+        $asset = PWAsset::add($this->slug, 'https://localhost:' . $this->port . '/' . $this->get_relative_path_from() . 'main' . ($this->is_ts ? '.ts' : '.js'))
             ->inFooter()->module();
 
         if ($this->position === 'admin') {
