@@ -70,7 +70,8 @@ class PWVite
 
     private function set_script_dev(): void
     {
-        PWAsset::add('presswind-script-dev', 'https://localhost:' . $this->port . '/' . $this->get_relative_path_from() . $this->path . '/main' . ($this->is_ts ? '.ts' : '.js'))
+        // $this->path
+        PWAsset::add($this->slug, 'https://localhost:' . $this->port . '/' . $this->get_relative_path_from() . '/main' . ($this->is_ts ? '.ts' : '.js'))
             ->inFooter()->module()->toFront();
     }
 
