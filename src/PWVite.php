@@ -115,16 +115,43 @@ class PWVite
 		// get manifest files list by order
 		$ordered = PWManifest::getOrdered($this->path, $this->is_plugin);
 		foreach ($ordered as $key => $value) {
-			// if is css
-			// disable this condition: property_exists($value, 'css') === true ||
-			if (str_contains($value->src, '.css') !== false) {
-				$asset = PWAsset::add($this->slug.'-'.$key, $this->getPath().$value->file)
-				                ->version($key);
-				// ->setOnLoad();
-				$this->setPosition($asset);
+			// if is .css in src or has css property
+			if (str_contains($value->src, '.css') !== false || property_exists($value, 'css')) {
+				// if has css property
+				if (property_exists($value, 'css')) {
+					foreach ($value->css as $k => $f) {
+						$asset = PWAsset::add($this->slug.'-'.$k.'='.$key, $this->getPath().$f)
+						                ->version($k.'='.$key);
+						$this->setPosition($asset);
+					}
 
-				// if is js
-			} else {
+					// add preload link
+					if ($this->position === 'front') {
+						$t = '<link rel="preload" href="'.$this->getPath().$f.'" as="style" crossorigin />';
+						add_action('wp_head', function () use ($t) {
+							echo $t;
+						}, 1);
+					}
+
+				} else {
+					$asset = PWAsset::add($this->slug.'-'.$key, $this->getPath().$value->file)
+					                ->version($key);
+					$this->setPosition($asset);
+
+					// add preload link
+					if ($this->position === 'front') {
+						$t = '<link rel="preload" href="'.$this->getPath().$value->file.'" as="style" crossorigin />';
+						add_action('wp_head', function () use ($t) {
+							echo $t;
+						}, 1);
+					}
+				}
+
+			}
+
+			// if is js
+			if (str_contains($value->src, '.js') !== false) {
+
 				if (str_contains($value->file, 'polyfills-legacy')) {
 					// Legacy nomodule polyfills for dynamic imports for older browsers
 					$asset = PWAsset::add($this->slug.'-'.$key, $this->getPath().$value->file)
@@ -149,6 +176,15 @@ class PWVite
 					                ->inFooter()
 					                ->module();
 					$this->setPosition($asset);
+
+					// add preload link
+					if ($this->position === 'front') {
+						$t = '<link rel="preload" href="'.$this->getPath().
+						     $value->file.'" as="script" crossorigin />';
+						add_action('wp_head', function () use ($t) {
+							echo $t;
+						}, 1);
+					}
 				}
 			}
 		}
