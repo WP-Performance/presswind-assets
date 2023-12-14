@@ -2,10 +2,8 @@
 
 namespace PressWind;
 
-
 class PWHelpers
 {
-
     public static function cleanPath($path)
     {
         // add slash start if not exist

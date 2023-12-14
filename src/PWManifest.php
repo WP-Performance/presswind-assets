@@ -4,7 +4,7 @@ namespace PressWind;
 
 class PWManifest
 {
-    static public $vite_folder = '.vite';
+    public static $vite_folder = '.vite';
 
     /**
      * check if vite version is 5 with .vite folder
@@ -140,7 +140,7 @@ class PWManifest
             // polyfill
             if (strpos($value->src, 'polyfills') > 0 && strpos($value->src, 'legacy') > 0) {
                 $polyfill = $value;
-                // legacy
+            // legacy
             } elseif (strpos($value->src, 'polyfills') === false && strpos($value->src, 'legacy') > 0) {
                 $legacy = $value;
             } else {
