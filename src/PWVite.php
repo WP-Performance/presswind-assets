@@ -110,7 +110,7 @@ class PWVite
             // current plugin dir
             $plugin_dir = plugin_dir_path($this->plugin_path);
             // remove last slash
-            $plugin_dir = rtrim($plugin_dir, '/');
+	        $plugin_dir = PWHelpers::cleanPath($plugin_dir, false);
 
             $_path_ = explode($content_dir, $plugin_dir.PWHelpers::cleanPath
 	            ($this->path, false));
