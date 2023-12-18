@@ -134,10 +134,10 @@ class Asset
         $file = $dir . $path;
         // if is dev localhost return time
         if (str_contains($file, 'localhost')) {
-            return strtotime('now');
+            return strval(strtotime('now'));
         }
 
-        return $this->ver ?? filemtime($file);
+        return $this->ver ?? strval(filemtime($file));
     }
 
     protected function enqueue(): void
