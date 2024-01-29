@@ -213,7 +213,7 @@ class PWVite
             }
 
             // if is js
-            if (str_contains($value->src, '.js') !== false) {
+            if (str_contains($value->src, '.js') !== false || str_contains($value->src, '.ts') !== false) {
 
                 if (str_contains($value->file, 'polyfills-legacy')) {
                     // Legacy nomodule polyfills for dynamic imports for older browsers
