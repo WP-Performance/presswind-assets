@@ -9,6 +9,10 @@ use PressWind\Base\JSAsset;
 
 class PWVite
 {
+	private bool $is_https = true;
+
+	private string $main_file = 'main';
+
     private static string $dist_path = 'dist/';
 
     private bool $is_plugin = false;
@@ -34,12 +38,15 @@ class PWVite
      * @param  string  $position - front|admin|editor
      */
     private function __construct(int $port, string $path, string $position =
-    'front', bool $is_ts = false, string|bool $plugin_path = false, string $slug = 'presswind-script')
+    'front', bool $is_ts = false, string|bool $plugin_path = false, string
+    $slug = 'presswind-script', $is_https = true, $main_file = 'main')
     {
         $this->port = $port;
         $this->path = $path;
         $this->is_ts = $is_ts;
         $this->position = $position;
+		$this->is_https = $is_https;
+		$this->main_file = $main_file;
         if ($plugin_path) {
             $this->is_plugin = true;
             $this->plugin_path = $plugin_path;
@@ -61,9 +68,11 @@ class PWVite
         'front',
         bool $is_ts = false,
         $plugin_path = false,
-        $slug = 'presswind-script'
+        $slug = 'presswind-script',
+	    $is_https = true,
+	    $main_file = 'main'
     ) {
-        return new self($port, $path, $position, $is_ts, $plugin_path, $slug);
+        return new self($port, $path, $position, $is_ts, $plugin_path, $slug, $is_https, $main_file);
     }
 
     public static function getLegacyInline()
@@ -138,8 +147,7 @@ class PWVite
 
     private function set_script_dev(): void
     {
-        $asset = PWAsset::add($this->slug, 'https://localhost:'.$this->port.'/'.$this->get_relative_path_from().'main'.($this->is_ts ? '.ts' : '.js'))
-                        ->inFooter()->module();
+        $asset = PWAsset::add($this->slug, ($this->is_https ? 'https' : 'http') . '://localhost:' .$this->port .'/'.$this->get_relative_path_from().$this->main_file.($this->is_ts ? '.ts' : '.js'))->inFooter()->module();
 
         if ($this->position === 'admin') {
             $asset->toBack();
