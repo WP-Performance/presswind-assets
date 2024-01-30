@@ -170,7 +170,8 @@ class PWVite
     {
         $_path = PWHelpers::cleanPath($this->path);
 
-        return PWApp::get_working_url($this->is_plugin).$_path.self::$dist_path;
+	    return ($this->is_plugin ? PWHelpers::cleanPath($this->get_relative_path_from(), false) : PWApp::get_working_url(false)) . $_path . self::$dist_path;
+
     }
 
     private function set_script_prod(): void
