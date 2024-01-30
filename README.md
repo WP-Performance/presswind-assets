@@ -15,6 +15,8 @@ is_ts - default false
 is_plugin true|false - default false - for search assets in plugin folder
 instead of theme folder
 slug - handle - default presswind-script
+is_https - default true - for https or http
+main_file - default main - file name without extension
 
 ```php
 use PressWind\PWVite;
